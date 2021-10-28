@@ -2,10 +2,8 @@
   "name": "wave-portal-client",
   "version": "0.1.0",
   "private": true,
-  "peerDependencies": {
-    
-  },
   "dependencies": {
+    "@craco/craco": "^6.4.0",
     "cra-template": "1.1.2",
     "ethers": "^5.4.7",
     "react": "^17.0.2",
@@ -13,9 +11,9 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -35,5 +33,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.8",
+    "postcss": "^7.0.39",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   }
 }
