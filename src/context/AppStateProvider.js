@@ -1,14 +1,13 @@
 import { ethers } from "ethers";
 import { useReducer, useLayoutEffect, useEffect } from "react";
 import { contractABI, contractAddress } from "../constants/contractConstants";
-import { GET_ACCOUNTS, GET_CHAIN, SET_THEME, WALLET_INSTALLED, SET_CONTRACT_PROVIDER, SET_CONTRACT_SIGNER } from "./app-actions";
+import { GET_ACCOUNTS, GET_CHAIN, WALLET_INSTALLED, SET_CONTRACT_PROVIDER, SET_CONTRACT_SIGNER } from "./app-actions";
 import AppContext from "./app-context";
 import { appReducer } from "./app-reducer";
 
 const AppStateProvider = ({ children }) => {
     // Initial App state
     const initialState = {
-        darkTheme: window.localStorage.getItem('darkTheme'),
         walletInstalled: false,
         currentAccount: [],
         currentChain: null,
@@ -19,29 +18,13 @@ const AppStateProvider = ({ children }) => {
 
     // Set app theme
     useLayoutEffect(() => {
-        if (state.darkTheme === true) {
-            setTheme(true);
-            window.localStorage.setItem('darkTheme', true);
-        } else {
-            setTheme(false);
-            window.localStorage.setItem('darkTheme', false);
-        }
-
-    }, [state.darkTheme]);
+                        // research this some more
+    }, []);
 
     useEffect(() => {
         setContractProvider();
         setContractSigner();
     }, []);
-
-    // dispatch method to set theme
-    const setTheme = (value) => {
-        dispatch({
-            type: SET_THEME,
-            payload: value,
-        });
-        document.body.setAttribute('theme', value);
-    };
 
     // dispatch method to check if a wallet is installed
     const walletInstalled = () => {
@@ -96,7 +79,7 @@ const AppStateProvider = ({ children }) => {
         }
     }
 
-    const appState = {state, setTheme, walletInstalled, getAccounts, getChain};
+    const appState = {state, walletInstalled, getAccounts, getChain};
 
     return (
         <AppContext.Provider value={appState}>

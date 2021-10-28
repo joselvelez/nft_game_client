@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { networks } from "../../constants/networks";
-import '../../index.css';
 import { ExclamationIcon } from '@heroicons/react/solid';
 
 export const WrongChain = () => {
@@ -37,7 +36,7 @@ export const WrongChain = () => {
                     <div className="mt-2 text-sm text-yellow-700">
                     <p>
                         You are currently on the {network.name} network. You must be on Rinkeby to access this dapp.
-                        Connect to Rinkeby
+                        Connect to the Rinkeby Network.
                     </p>
                     </div>
                 </div>

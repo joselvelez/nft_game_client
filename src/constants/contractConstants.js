@@ -1,3 +1,3 @@
-import abi from '../contracts/WavePortal.json';
-export const contractAddress = '0xf11A2276E64A4b071627686f6f7F882b3f52F882'
+import abi from '../contracts/TeamAmericaSlayers.json';
+export const contractAddress = '0x1BCC7A8eb6970D8394Ff4d436DB3F5153cc7AB4E'
 export const contractABI = abi.abi;

@@ -1,7 +1,23 @@
+import { ExclamationIcon } from '@heroicons/react/solid';
+
 export const NoWallet = () => {
     return (
-        <div>
-            <p>You need a wallet installed to access this site!</p>
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div className="rounded-md bg-yellow-50 p-4">
+                <div className="flex">
+                <div className="flex-shrink-0">
+                    <ExclamationIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                </div>
+                <div className="ml-3">
+                    <h3 className="text-sm font-medium text-yellow-800">Attention needed</h3>
+                    <div className="mt-2 text-sm text-yellow-700">
+                    <p>
+                        You need to have a wallet installed to access this site. Please install a wallet.
+                    </p>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
     )
 }

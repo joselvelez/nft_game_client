@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import AppContext from '../../context/app-context';
+import Header from '../Header';
 import { Connect } from './Connect';
 import { Content } from './Content';
 import { NoWallet } from './NoWallet';
@@ -52,15 +53,28 @@ export const Main = () => {
         );
     } else if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length === 0) {
         return (
-            <Connect />
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <Header />
+                <div className="p-4">
+                    <Connect />
+                </div>
+            </div>
         )
     } else if (appContext.state.walletInstalled === false) {
         return (
-            <NoWallet />
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="p-4">
+                    <NoWallet />
+                </div>
+            </div>
         )
     } else if (appContext.state.walletInstalled === true && appContext.state.currentChain !== '0x4') {
         return (
-            <WrongChain />
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="p-4">
+                    <WrongChain />
+                </div>
+            </div>
         )
     }
 }

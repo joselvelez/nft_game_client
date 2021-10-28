@@ -2,7 +2,13 @@
 import { useContext } from 'react';
 import { contractAddress } from '../../constants/contractConstants';
 import AppContext from '../../context/app-context';
+import Header from '../Header';
+import LoadTeam from '../LoadTeam';
 // Core Imports End
+
+// Components Imports
+import MintNewCharacter from '../MintNewCharacterBtn';
+import MintNewCharacterSelection from '../MintNewCharacterSelection';
 
 export const Content = () => {
   const appContext = useContext(AppContext);
@@ -22,7 +28,15 @@ export const Content = () => {
 
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <p>sup man</p>
+      <Header />
+      <div className="flex flex-row">
+        <MintNewCharacter />
+        <LoadTeam />
+      </div>
+
+      <div className="p-4">
+        <MintNewCharacterSelection />
+      </div>
     </div>
   );
 };

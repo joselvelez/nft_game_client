@@ -1,4 +1,3 @@
-export const SET_THEME = "SET_THEME";
 export const WALLET_INSTALLED = "WALLET_INSTALLED";
 export const CONNECT_WALLET = "CONNECT_WALLET";
 export const GET_ACCOUNTS = "GET_ACCOUNTS";
