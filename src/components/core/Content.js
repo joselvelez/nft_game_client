@@ -21,8 +21,8 @@ export const Content = () => {
   });
 
   return (
-    <section>
+    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <p>sup man</p>
-    </section>
+    </div>
   );
 };
