@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { networks } from "../constants/networks";
+import { networks } from "../../constants/networks";
 
 export const WrongChain = () => {
     const [network, setNetwork] = useState({});

@@ -1,5 +1,5 @@
 import './App.css';
-import AppStateProvider from '../../context/AppStateProvider';
+import AppStateProvider from '../../../context/AppStateProvider';
 import { Main } from '../Main';
 
 function App() {

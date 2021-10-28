@@ -1,4 +1,4 @@
-import './App/App.css';
+import './core/App/App.css';
 import { LastWaveTimeStamp } from './LastWaveTimeStamp';
 import { LastWaverAddress } from './LastWaverAddress';
 

@@ -1,12 +1,12 @@
 import { useContext } from 'react';
-import { Wave } from './Wave';
-import { WaveStats } from './WaveStats';
-import { TotalWaves } from './TotalWaves';
-import { TopWaverAddress } from './TopWaverAddress';
-import { MaxWaves } from './MaxWaves';
-import { Transactions } from './Transactions';
-import { contractAddress } from '../constants/contractConstants';
-import AppContext from '../context/app-context';
+import { Wave } from '../Wave';
+import { WaveStats } from '../WaveStats';
+import { TotalWaves } from '../TotalWaves';
+import { TopWaverAddress } from '../TopWaverAddress';
+import { MaxWaves } from '../MaxWaves';
+import { Transactions } from '../Transactions';
+import { contractAddress } from '../../constants/contractConstants';
+import AppContext from '../../context/app-context';
 
 export const Content = () => {
   const appContext = useContext(AppContext);

@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import AppContext from '../context/app-context';
+import AppContext from '../../context/app-context';
 import { Connect } from './Connect';
 import { Content } from './Content';
 import { NoWallet } from './NoWallet';
