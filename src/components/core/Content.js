@@ -1,8 +1,9 @@
 // Core Imports Begin
 import { useContext } from 'react';
-import { contractAddress } from '../../constants/contractConstants';
 import AppContext from '../../context/app-context';
+import { Footer } from '../Footer';
 import Header from '../Header';
+import LoadCurrentTeam from '../LoadCurrentTeam';
 import LoadTeam from '../LoadTeam';
 // Core Imports End
 
@@ -36,6 +37,8 @@ export const Content = () => {
 
       <div className="p-4">
         <MintNewCharacterSelection />
+        <LoadCurrentTeam />
+        <Footer />
       </div>
     </div>
   );
