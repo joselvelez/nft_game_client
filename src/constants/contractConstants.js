@@ -1,3 +1,3 @@
 import abi from '../contracts/TeamAmericaSlayers.json';
-export const contractAddress = '0x191425E972b2cf6aDa8c40Ec32c5EbA88dB53525'
+export const contractAddress = '0xa514C5c5D04517eaC6683422dE1a86BaE86AC1e5'
 export const contractABI = abi.abi;
