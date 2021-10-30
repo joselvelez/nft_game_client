@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/app-context";
+import { NoTeamAvailable } from "./NoTeamAvailable";
+import { TeamAvailable } from "./TeamAvailable";
   
   export default function LoadCurrentTeam() {
     const [currentTeam, setCurrentTeam] = useState([]);
@@ -18,7 +20,7 @@ import AppContext from "../context/app-context";
         try {
             const team = [];
             const result = await appContext.state.contractProvider.getListOfOwnedCharacters(appContext.state.currentAccount[0]);
-
+            
             for (let i = 0; i < result.length; i++) {
                 try {
                     const character = await fetchCharacter(result[i]);
@@ -27,7 +29,7 @@ import AppContext from "../context/app-context";
                     console.log(e);
                 }
             }
-
+            console.log(team);
             setCurrentTeam(team);
 
         } catch (e) {
@@ -44,12 +46,7 @@ import AppContext from "../context/app-context";
       <div className="bg-white rounded">
       <div className="mx-auto py-6 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-8">
         <div className="space-y-6">
-          <div className="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
-            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Your current team</h2>
-            <p className="text-gray-500">
-            Select from one of the default characters below to mint your own personal NFT with unique traits based on the selected character.
-            </p>
-          </div>
+            {currentTeam.length > 0 ? <TeamAvailable /> : <NoTeamAvailable />}
           <ul
             className="space-y-8 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 sm:space-y-0 lg:grid-cols-3"
           >

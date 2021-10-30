@@ -34,8 +34,6 @@ import AppContext from "../context/app-context";
       fetchDefaultCharacters();
     }, []);
 
-    console.log(defaultCharactersArray);
-
     return (
       <div className="bg-white rounded">
       <div className="mx-auto py-6 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-8">
