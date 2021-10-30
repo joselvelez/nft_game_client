@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/app-context";
+import { contractAddress } from "../constants/contractConstants";
 import { NoTeamAvailable } from "./NoTeamAvailable";
 import { TeamAvailable } from "./TeamAvailable";
   
@@ -56,20 +57,22 @@ import { TeamAvailable } from "./TeamAvailable";
                     <div className="flex flex-row">
                         <img className="w-32 h-32 flex-shrink-0 rounded-full" src={person.character.imageURI} alt="" />
                         <div className="mx-auto my-auto py-2 flex flex-col">
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-2.5 py-2 m-2 border border-transparent text-xs font-medium rounded shadow-sm text-white
-                            bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Open Sea
-                        </button>
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-2.5 py-2 m-2 border border-transparent text-xs font-medium rounded shadow-sm text-white
-                            bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Battle
-                        </button>
+                            <a href={`https://testnets.opensea.io/assets/${contractAddress}/${person.id}`} target="_blank" rel="noreferrer">
+                                <button
+                                    type="button"
+                                    className="inline-flex items-center px-2.5 py-2 m-2 border border-transparent text-xs font-medium rounded shadow-sm text-white
+                                    bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Open Sea
+                                </button>
+                            </a>
+                            <button
+                                type="button"
+                                className="inline-flex items-center px-2.5 py-2 m-2 border border-transparent text-xs font-medium rounded shadow-sm text-white
+                                bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Battle
+                            </button>
                         </div>
                     </div>
                     <div className="space-y-2">
