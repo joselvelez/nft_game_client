@@ -5,6 +5,10 @@ import AppContext from "../context/app-context";
     const [defaultCharactersArray, setDefaultCharactersArray] = useState([]);
     const appContext = useContext(AppContext);
 
+    appContext.state.contractProvider.on('CharacterMinted', (minter, tokenId, characterIndex) => {
+      console.log(`${minter} has successfully minted ${tokenId} of ${characterIndex}`);
+    })
+
     const fetchDefaultCharacters = async () => {
         try {
             const result = await appContext.state.contractProvider.getAllDefaultCharacters();
