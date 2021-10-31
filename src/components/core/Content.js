@@ -1,18 +1,20 @@
 // Core Imports Begin
 import { useContext, useState } from 'react';
 import AppContext from '../../context/app-context';
-import { Footer } from '../Footer';
-import Header from '../Header';
-import LoadCurrentTeam from '../LoadCurrentTeam';
-import LoadTeam from '../LoadTeamBtn';
 // Core Imports End
 
 // Components Imports
+import Header from '../Header';
+import { Battle } from '../Battle';
+import { Footer } from '../Footer';
+import LoadCurrentTeam from '../LoadCurrentTeam';
+import LoadTeam from '../LoadTeamBtn';
 import MintNewCharacter from '../MintNewCharacterBtn';
 import MintNewCharacterSelection from '../MintNewCharacterSelection';
 
 export const Content = () => {
   const appContext = useContext(AppContext);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [currentComponent, setCurrentComponent] = useState('MintNewCharacter'); // Options are MintNewCharacter, LoadTeam, Battle
   const ethereum = window.ethereum;
 
@@ -40,9 +42,9 @@ export const Content = () => {
         {(() => {
             switch (currentComponent) {
               case 'LoadTeam':
-                return <LoadCurrentTeam />;
+                return <LoadCurrentTeam setCurrentComponent={setCurrentComponent} setSelectedCharacter={setSelectedCharacter} />;
               case 'Battle':
-                return <LoadTeam />;
+                return <Battle selectedCharacter={selectedCharacter} />;
               default:
                 return <MintNewCharacterSelection />;
             }

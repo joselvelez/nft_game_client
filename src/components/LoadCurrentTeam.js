@@ -4,9 +4,14 @@ import { contractAddress } from "../constants/contractConstants";
 import { NoTeamAvailable } from "./NoTeamAvailable";
 import { TeamAvailable } from "./TeamAvailable";
   
-  export default function LoadCurrentTeam() {
+  export default function LoadCurrentTeam({ setCurrentComponent, setSelectedCharacter }) {
     const [currentTeam, setCurrentTeam] = useState([]);
     const appContext = useContext(AppContext);
+
+    const prepArena = (_selectedCharacter) => {
+        setSelectedCharacter(_selectedCharacter);
+        setCurrentComponent('Battle');
+    }
 
     const fetchCharacter = async (tokenId) => {
         try {
@@ -30,7 +35,6 @@ import { TeamAvailable } from "./TeamAvailable";
                     console.log(e);
                 }
             }
-            console.log(team);
             setCurrentTeam(team);
 
         } catch (e) {
@@ -68,6 +72,7 @@ import { TeamAvailable } from "./TeamAvailable";
                             </a>
                             <button
                                 type="button"
+                                onClick={() => prepArena(person.id)}
                                 className="inline-flex items-center px-2.5 py-2 m-2 border border-transparent text-xs font-medium rounded shadow-sm text-white
                                 bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
