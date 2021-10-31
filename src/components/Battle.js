@@ -3,6 +3,7 @@ import AppContext from "../context/app-context";
 import { BattleBtn } from "./BattleBtn";
 import BattleCardBoss from "./BattleCardBoss";
 import BattleCardPlayer from "./BattleCardPlayer";
+import BattleNotification from "./BattleNotification";
 import { BattleProgress } from "./BattleProgress";
 
 export const Battle = ({ selectedCharacter }) => {
@@ -58,14 +59,17 @@ export const Battle = ({ selectedCharacter }) => {
     return (
         <div className="bg-white rounded">
         <div className="mx-auto py-6 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-8">
-          <div className="flex flex-row">
-              {boss ? <BattleCardBoss characterData={boss} attackState={attackState} /> : <p>No boss found.</p>}
-              {battleCharacter ? <BattleCardPlayer characterData={battleCharacter.battleCharacter}/> : <p>No character found for battle.</p>}
-          </div>
+            {attackState === 'peace' ?
+                <div className="flex flex-row">
+                    {boss ? <BattleCardBoss characterData={boss} attackState={attackState} /> : <p>No boss found.</p>}
+                    {battleCharacter ? <BattleCardPlayer characterData={battleCharacter.battleCharacter}/> : <p>No character found for battle.</p>}
+                </div> : ''
+            }
           <div className="flex mt-3 justify-center">
             {attackState === 'peace' ? <BattleBtn attackBoss={attackBoss} battleCharacter={battleCharacter} /> : <BattleProgress />}
           </div>
         </div>
+        <BattleNotification />
         </div>
     )
 }

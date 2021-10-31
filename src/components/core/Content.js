@@ -11,6 +11,7 @@ import LoadCurrentTeam from '../LoadCurrentTeam';
 import LoadTeam from '../LoadTeamBtn';
 import MintNewCharacter from '../MintNewCharacterBtn';
 import MintNewCharacterSelection from '../MintNewCharacterSelection';
+import MintNotificationSuccess from '../MintNotificationSuccess';
 
 export const Content = () => {
   const appContext = useContext(AppContext);
@@ -36,6 +37,7 @@ export const Content = () => {
       <div className="flex flex-row">
         <MintNewCharacter setCurrentComponent={setCurrentComponent}/>
         <LoadTeam setCurrentComponent={setCurrentComponent} />
+        <MintNotificationSuccess />
       </div>
 
       <div className="p-4">

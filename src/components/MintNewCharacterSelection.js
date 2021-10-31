@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/app-context";
+import loadingIndicator from '../images/loadingIndicator.gif';
   
   export default function MintNewCharacterSelection() {
     const [defaultCharactersArray, setDefaultCharactersArray] = useState([]);
+    const [isMinting, setIsMinting] = useState(false);
     const appContext = useContext(AppContext);
 
     appContext.state.contractProvider.on('CharacterMinted', (minter, tokenId, characterIndex) => {
@@ -20,12 +22,15 @@ import AppContext from "../context/app-context";
 
     const mintNewCharacterAction = async (characterIndex) => {
       try {
+        setIsMinting(true);
         console.log("Minting new character...");
         const txn = await appContext.state.contractSigner.mintNewCharacterNFT(characterIndex);
         await txn.wait();
         console.log(`Minted: ${txn}`);
+        setIsMinting(false);
       } catch (e) {
         console.log(e);
+        setIsMinting(false);
       }
     }
 
@@ -51,7 +56,7 @@ import AppContext from "../context/app-context";
               <li key={parseInt(person.characterIndex) }>
                 <div className="space-y-1">
                   <div className="flex flex-row">
-                    <img className="w-32 h-32 flex-shrink-0 rounded-full" src={person.imageURI} alt="" />
+                    {isMinting ? <img className="w-32 h-32 flex-shrink-0 rounded-full" src={loadingIndicator} alt="NFT minting..." /> : <img className="w-32 h-32 flex-shrink-0 rounded-full" src={person.imageURI} alt="" />}
                     <div className="mx-auto my-auto p-2">
                       <button
                         type="button"
