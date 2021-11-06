@@ -1,43 +1,13 @@
-import { useContext, useEffect } from 'react';
-import AppContext from '../../context/app-context';
-import Header from '../Header';
+import { useContext } from 'react';
+import { WalletContext } from '../../context/WalletContext';
 import { Connect } from './Connect';
-import { Content } from './Content';
+import { Content } from '../Content';
 import { NoWallet } from './NoWallet';
 import { WrongChain } from './WrongChain';
+import { configuredChain } from '../../constants/networks';
 
 export const Main = () => {
-    const appContext = useContext(AppContext);
-
-    useEffect(() => {
-        const ethereum = window.ethereum;
-
-        const fetchAccounts = async () => {
-            try {
-                const _accounts = await ethereum.request({ method: 'eth_accounts'});
-                if (_accounts !== window.localStorage.getItem("lastAccount")) {
-                    appContext.getAccounts(_accounts);
-                }
-            } catch (e) {
-                console.log("No wallet detected");
-            };
-        };
-    
-        const fetchChain = async () => {
-            try {
-                const _chain = await ethereum.request({method: 'eth_chainId'});
-                appContext.getChain(_chain);
-            } catch (e) {
-                console.log("No chain found");
-            }
-        }
-
-        if (typeof(ethereum) !== 'undefined') {
-            appContext.walletInstalled();
-            fetchAccounts()
-            fetchChain();
-        }
-    }, []);
+    const appContext = useContext(WalletContext);
 
     /*
         Do some pre-checks before rendering the app.
@@ -47,31 +17,34 @@ export const Main = () => {
         4. Check if a wallet is installed, connected AND on the correct network (pass go :) )
     */
 
-    if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length > 0 && appContext.state.currentChain === '0x4') {
+    if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length > 0 && appContext.state.currentChain === configuredChain) {
         return (
-            <Content />
+            <div className="bg-gray-900 h-screen p-5">
+                <div className="md:container md:mx-auto">
+                    <Content />
+                </div>
+            </div>
         );
     } else if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length === 0) {
         return (
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <Header />
-                <div className="p-4">
+            <div className="bg-gray-900 h-screen p-5">
+                <div className="md:container md:mx-auto text-white">
                     <Connect />
                 </div>
             </div>
         )
     } else if (appContext.state.walletInstalled === false) {
         return (
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div className="p-4">
+            <div className="bg-gray-900 h-screen p-5">
+                <div className="md:container md:mx-auto text-white">
                     <NoWallet />
                 </div>
             </div>
         )
     } else if (appContext.state.walletInstalled === true && appContext.state.currentChain !== '0x4') {
         return (
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div className="p-4">
+            <div className="bg-gray-900 h-screen p-5">
+                <div className="md:container md:mx-auto text-white">
                     <WrongChain />
                 </div>
             </div>

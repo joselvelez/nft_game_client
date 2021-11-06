@@ -1,29 +1,18 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment } from 'react'
 import { Transition } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/outline'
 import { XIcon } from '@heroicons/react/solid'
 
-import AppContext from '../context/app-context'
-
-export default function MintNotificationSuccess() {
-  const [show, setShow] = useState(false);
-  const appContext = useContext(AppContext);
-
-  appContext.state.contractProvider.on('CharacterMinted', (minter, tokenId, characterIndex) => {
-    setShow(true);
-  })
-
+export default function MintNotificationSuccess({ setMintNotificationValue }) {
   return (
     <>
-      {/* Global notification live region, render this permanently at the end of the document */}
       <div
         aria-live="assertive"
         className="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
       >
         <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
-          {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
           <Transition
-            show={show}
+            show={true}
             as={Fragment}
             enter="transform ease-out duration-300 transition"
             enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -46,7 +35,7 @@ export default function MintNotificationSuccess() {
                     <button
                       className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       onClick={() => {
-                        setShow(false);
+                        setMintNotificationValue(false);
                       }}
                     >
                       <span className="sr-only">Close</span>

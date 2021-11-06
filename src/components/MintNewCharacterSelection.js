@@ -1,43 +1,50 @@
-import { useContext, useEffect, useState } from "react";
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
+import { fetchDefaultCharacters, mintNewCharacter } from "../contracts/contractAPI";
 import loadingIndicator from '../images/loadingIndicator.gif';
+import MintNotificationSuccess from "./MintNotificationSuccess";
   
   export default function MintNewCharacterSelection() {
     const [defaultCharactersArray, setDefaultCharactersArray] = useState([]);
     const [isMinting, setIsMinting] = useState(false);
-    const appContext = useContext(AppContext);
-
-    appContext.state.contractProvider.on('CharacterMinted', (minter, tokenId, characterIndex) => {
-      console.log(`${minter} has successfully minted ${tokenId} of ${characterIndex}`);
-    })
-
-    const fetchDefaultCharacters = async () => {
-        try {
-            const result = await appContext.state.contractProvider.getAllDefaultCharacters();
-            setDefaultCharactersArray(result);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    const mintNewCharacterAction = async (characterIndex) => {
-      try {
-        setIsMinting(true);
-        console.log("Minting new character...");
-        const txn = await appContext.state.contractSigner.mintNewCharacterNFT(characterIndex);
-        await txn.wait();
-        console.log(`Minted: ${txn}`);
-        setIsMinting(false);
-      } catch (e) {
-        console.log(e);
-        setIsMinting(false);
-      }
-    }
+    const [showMintNotification, setShowMintNotification] = useState(false);
 
     useEffect(() => {
       console.log("Loading default characters")
-      fetchDefaultCharacters();
+      loadDefaultCharacters();
     }, []);
+
+    async function loadDefaultCharacters() {
+      try {
+        const _defaultCharacters = await fetchDefaultCharacters();
+        setDefaultCharactersArray(_defaultCharacters);
+      } catch (e) {
+        console.log("Unable to load default characters");
+      }
+    }
+
+    async function mintCharacter(_characterIndex) {
+      try {
+        setIsMinting(true);
+        console.log("Minting new character...");
+        try {
+          const _minted = await mintNewCharacter(_characterIndex);
+          if (_minted === true) {
+            console.log("Mint successfull");
+            setIsMinting(false);
+            setShowMintNotification(true);
+          } else {
+            console.log(_minted.message);
+            setIsMinting(false);
+          }
+        } catch (e) {
+            console.log("Mint was not successful");
+            setIsMinting(false);
+        }
+      } catch (e) {
+        console.log("Unable to mint new character");
+        setIsMinting(false);
+      }
+    }
 
     return (
       <div className="bg-white rounded">
@@ -60,7 +67,7 @@ import loadingIndicator from '../images/loadingIndicator.gif';
                     <div className="mx-auto my-auto p-2">
                       <button
                         type="button"
-                        onClick={() => mintNewCharacterAction(person.characterIndex)}
+                        onClick={() => mintCharacter(person.characterIndex)}
                         className="inline-flex items-center px-3.5 py-2.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >
                         Mint
@@ -77,6 +84,9 @@ import loadingIndicator from '../images/loadingIndicator.gif';
             ))}
           </ul>
         </div>
+      </div>
+      <div>
+        {showMintNotification ? <MintNotificationSuccess setMintNotificationValue={setShowMintNotification} /> : ''}
       </div>
       </div>
     )

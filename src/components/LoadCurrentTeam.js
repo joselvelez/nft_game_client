@@ -1,51 +1,30 @@
-import { useContext, useEffect, useState } from "react";
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
 import { contractAddress } from "../constants/contractConstants";
 import { NoTeamAvailable } from "./NoTeamAvailable";
 import { TeamAvailable } from "./TeamAvailable";
+import { fetchCurrentTeam } from "../contracts/contractAPI";
   
-  export default function LoadCurrentTeam({ setCurrentComponent, setSelectedCharacter }) {
+export default function LoadCurrentTeam({ setCurrentComponent, setSelectedCharacter }) {
     const [currentTeam, setCurrentTeam] = useState([]);
-    const appContext = useContext(AppContext);
 
     const prepArena = (_selectedCharacter) => {
         setSelectedCharacter(_selectedCharacter);
         setCurrentComponent('Battle');
     }
 
-    const fetchCharacter = async (tokenId) => {
+    useEffect(() => {
+        console.log("Loading current team")
+        loadTeam();
+    },[]);
+
+    async function loadTeam(_currentAccount) {
         try {
-            const character = await appContext.state.contractProvider.getCharacter(tokenId);
-            return {id: tokenId, character: character};
+            const _team = await fetchCurrentTeam(_currentAccount);
+            setCurrentTeam(_team);
         } catch (e) {
-            console.log("Error, cannot fetch chacter");
+            console.log("Unable to fetch team data");
         }
     }
-
-    const fetchCurrentTeam = async () => {
-        try {
-            const team = [];
-            const result = await appContext.state.contractProvider.getListOfOwnedCharacters(appContext.state.currentAccount[0]);
-            
-            for (let i = 0; i < result.length; i++) {
-                try {
-                    const character = await fetchCharacter(result[i]);
-                    team.push(character)
-                } catch (e) {
-                    console.log(e);
-                }
-            }
-            setCurrentTeam(team);
-
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    useEffect(() => {
-      console.log("Loading current team")
-      fetchCurrentTeam();
-    },[]);
 
     return (
       <div className="bg-white rounded">
@@ -59,7 +38,7 @@ import { TeamAvailable } from "./TeamAvailable";
                 <li key={person.id}>
                     <div className="space-y-1">
                     <div className="flex flex-row">
-                        <img className="w-32 h-32 flex-shrink-0 rounded-full" src={person.character.imageURI} alt="" />
+                        <img className="w-32 h-32 flex-shrink-0 rounded-full" src={person.battleCharacter.imageURI} alt="" />
                         <div className="mx-auto my-auto py-2 flex flex-col">
                             <a href={`https://testnets.opensea.io/assets/${contractAddress}/${person.id}`} target="_blank" rel="noreferrer">
                                 <button
@@ -82,7 +61,7 @@ import { TeamAvailable } from "./TeamAvailable";
                     </div>
                     <div className="space-y-2">
                         <div className="text-lg leading-7 font-normal space-y-1">
-                        <h3>{person.character.name}</h3>
+                        <h3>{person.battleCharacter.name}</h3>
                         </div>
                     </div>
                     </div>
