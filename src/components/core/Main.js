@@ -19,7 +19,7 @@ export const Main = () => {
 
     if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length > 0 && appContext.state.currentChain === configuredChain) {
         return (
-            <div className="bg-gray-900 h-screen p-5">
+            <div className="bg-gray-900 h-full p-5">
                 <div className="md:container md:mx-auto">
                     <Content />
                 </div>
@@ -27,7 +27,7 @@ export const Main = () => {
         );
     } else if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length === 0) {
         return (
-            <div className="bg-gray-900 h-screen p-5">
+            <div className="bg-gray-900 h-full p-5">
                 <div className="md:container md:mx-auto text-white">
                     <Connect />
                 </div>
@@ -35,7 +35,7 @@ export const Main = () => {
         )
     } else if (appContext.state.walletInstalled === false) {
         return (
-            <div className="bg-gray-900 h-screen p-5">
+            <div className="bg-gray-900 h-full p-5">
                 <div className="md:container md:mx-auto text-white">
                     <NoWallet />
                 </div>
@@ -43,7 +43,7 @@ export const Main = () => {
         )
     } else if (appContext.state.walletInstalled === true && appContext.state.currentChain !== '0x4') {
         return (
-            <div className="bg-gray-900 h-screen p-5">
+            <div className="bg-gray-900 h-full p-5">
                 <div className="md:container md:mx-auto text-white">
                     <WrongChain />
                 </div>
