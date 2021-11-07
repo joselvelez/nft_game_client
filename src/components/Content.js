@@ -30,6 +30,9 @@ export const Content = () => {
                 return <MintNewCharacterSelection />;
             }
           })()}
+      </div>
+
+      <div className="pl-4 pr-4">
         <Footer />
       </div>
     </div>
