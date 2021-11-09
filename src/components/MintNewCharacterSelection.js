@@ -57,7 +57,7 @@ import MintNotificationSuccess from "./MintNotificationSuccess";
               </p>
             </div>
             <ul
-              className="space-y-6 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 sm:space-y-0 lg:grid-cols-4"
+              className="space-y-6 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 sm:space-y-0 lg:grid-cols-3"
             >
               {defaultCharactersArray.map((person) => (
                 <li key={parseInt(person.characterIndex) }>
