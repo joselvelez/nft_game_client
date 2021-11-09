@@ -9,7 +9,10 @@ export default function BattleCardPlayer({ characterData }) {
           <h4 className="text-lg font-bold">{characterData.name}</h4>
           <p>{`Attack Damage: ${characterData.attackDamage}`}</p>
           <div className="shadow w-full bg-gray-300 mt-2">
-            <div className="bg-green-500 text-xs leading-none py-1 text-center text-white" style={{width: `${(characterData.hp/characterData.maxHp)*100}%`}}>{`${characterData.hp}/${characterData.maxHp}`}</div>
+            <div className="bg-green-500 text-xs leading-none py-1 text-center text-white" 
+              style={{width: `${(characterData.hp/characterData.maxHp)*100}%`}}>
+                {`${characterData.hp}/${characterData.maxHp}`}
+            </div>
           </div>
         </div>
       </div>
