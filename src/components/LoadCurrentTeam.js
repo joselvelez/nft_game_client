@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { contractAddress } from "../constants/contractConstants";
 import { NoTeamAvailable } from "./NoTeamAvailable";
 import { TeamAvailable } from "./TeamAvailable";
 import { fetchCurrentTeam } from "../contracts/contractAPI";
@@ -7,23 +6,23 @@ import { fetchCurrentTeam } from "../contracts/contractAPI";
 export default function LoadCurrentTeam({ setCurrentComponent, setSelectedCharacter }) {
     const [currentTeam, setCurrentTeam] = useState([]);
 
-    const prepArena = (_selectedCharacter) => {
-        setSelectedCharacter(_selectedCharacter);
-        setCurrentComponent('Battle');
-    }
-
     useEffect(() => {
         console.log("Loading current team")
         loadTeam();
     },[]);
 
-    async function loadTeam(_currentAccount) {
+    async function loadTeam() {
         try {
-            const _team = await fetchCurrentTeam(_currentAccount);
+            const _team = await fetchCurrentTeam();
             setCurrentTeam(_team);
         } catch (e) {
             console.log("Unable to fetch team data");
         }
+    }
+
+    const loadCharacter = (characterId) => {
+        setSelectedCharacter(characterId);
+        setCurrentComponent('ViewCharacter');
     }
 
     return (
@@ -36,34 +35,16 @@ export default function LoadCurrentTeam({ setCurrentComponent, setSelectedCharac
           >
                 {currentTeam.map((person) => (
                 <li key={person.id}>
-                    <div className="space-y-1">
-                    <div className="flex flex-row">
-                        <img className="w-32 h-32 flex-shrink-0 rounded-full" src={person.battleCharacter.imageURI} alt="" />
-                        <div className="mx-auto my-auto py-2 flex flex-col">
-                            <a href={`https://testnets.opensea.io/assets/${contractAddress}/${person.id}`} target="_blank" rel="noreferrer">
-                                <button
-                                    type="button"
-                                    className="inline-flex items-center px-2.5 py-2 m-2 border border-transparent text-xs font-medium rounded shadow-sm text-white
-                                    bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Open Sea
-                                </button>
-                            </a>
-                            <button
-                                type="button"
-                                onClick={() => prepArena(person.id)}
-                                className="inline-flex items-center px-2.5 py-2 m-2 border border-transparent text-xs font-medium rounded shadow-sm text-white
-                                bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Battle
-                            </button>
+                    <div className="space-y-1 w-auto flex flex-col place-items-center">
+                        <div className="flex flex-row">
+                            <img className="w-32 h-32 flex-shrink-0 rounded-full cursor-pointer hover:shadow-lg" 
+                                src={person.battleCharacter.imageURI} alt="" onClick={() => loadCharacter(person.id)}/>
                         </div>
-                    </div>
-                    <div className="space-y-2">
-                        <div className="text-lg leading-7 font-normal space-y-1">
-                        <h3>{person.battleCharacter.name}</h3>
+                        <div className="space-y-2">
+                            <div className="text-lg leading-7 font-normal space-y-1">
+                            <h3>{person.battleCharacter.name}</h3>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </li>
                 ))}

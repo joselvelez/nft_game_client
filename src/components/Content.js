@@ -6,10 +6,11 @@ import LoadCurrentTeam from './LoadCurrentTeam';
 import LoadTeam from './LoadTeamBtn';
 import MintNewCharacter from './MintNewCharacterBtn';
 import MintNewCharacterSelection from './MintNewCharacterSelection';
+import ViewCharacter from './ViewCharacter';
 
 export const Content = () => {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
-  const [currentComponent, setCurrentComponent] = useState('MintNewCharacter'); // Options are MintNewCharacter, LoadTeam, Battle
+  const [currentComponent, setCurrentComponent] = useState('MintNewCharacter'); // Options are MintNewCharacter, LoadTeam, Battle, ViewCharacter
 
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -26,6 +27,8 @@ export const Content = () => {
                 return <LoadCurrentTeam setCurrentComponent={setCurrentComponent} setSelectedCharacter={setSelectedCharacter} />;
               case 'Battle':
                 return <Battle selectedCharacter={selectedCharacter} />;
+              case 'ViewCharacter':
+                return <ViewCharacter selectedCharacter={selectedCharacter} setCurrentComponent={setCurrentComponent} />
               default:
                 return <MintNewCharacterSelection />;
             }
