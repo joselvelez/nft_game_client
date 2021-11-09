@@ -29,7 +29,7 @@ export default function BattleNotification({ battleNotificationValue }) {
                     </div>
                     <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">Battle has finished</p>
-                    <p className="mt-1 text-sm text-gray-500">You might wanna go check on your team mate... just sayin'...</p>
+                    <p className="mt-1 text-sm text-gray-500">Go check on your teammate... bring a medic</p>
                     </div>
                     <div className="ml-4 flex-shrink-0 flex">
                     <button
