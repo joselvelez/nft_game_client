@@ -15,14 +15,14 @@ const WalletProvider = ({ children }) => {
 
     // Handle wallet events (Docs @ https://docs.metamask.io/guide/ethereum-provider.html#events)
     window.ethereum.on('accountsChanged', () => {
-    console.log("Changing account");
-    getAccount();
+        console.log("Changing account");
+        getAccount();
     });
   
     window.ethereum.on('chainChanged', (chainId) => {
-    console.log(`Switching chains to ${chainId}`);
-    getChain();
-    window.location.reload();
+        console.log(`Switching chains to ${chainId}`);
+        getChain();
+        window.location.reload();
     });
 
     useEffect(() => {
