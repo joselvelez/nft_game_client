@@ -1,3 +1,7 @@
 import abi from '../contracts/TeamAmericaSlayers.json';
-export const contractAddress = '0x0165878A594ca255338adfa4d48449f69242Eb8F'
+export const contractAddress = '0xBF0dab116c4870fA4301271759F79B8AC99368aa';
 export const contractABI = abi.abi;
+
+export function shortenAddress(address) {
+    return `${address.substring(0,6)}...${address.substring(address.length -  4)}`;
+}

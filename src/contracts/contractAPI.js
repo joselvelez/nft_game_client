@@ -51,7 +51,15 @@ export const fetchCharacter = async (tokenId) => {
     try {
         const _provider = getContractProvider();
         const _character = await _provider.getCharacter(tokenId);
-        return {id: tokenId, battleCharacter: _character};
+        const _characterObject = {
+            name: _character.name,
+            hp: _character.hp,
+            maxHp: _character.maxHp,
+            imageURI: _character.imageURI,
+            attackDamage: _character.attackDamage,
+            characterIndex: _character.characterIndex
+        };
+        return {id: tokenId, battleCharacter: _characterObject};
     } catch (e) {
         console.log("Error, cannot fetch character");
     }
@@ -87,6 +95,7 @@ export const attackBoss = async (_id) => {
         return true;
     } catch (e) {
         console.log("Unable to attack");
+        return false;
     }
 }
 
@@ -98,5 +107,18 @@ export const mintNewCharacter = async (characterIndex) => {
         return true;
     } catch (e) {
         console.log("Unable to mint character from contract");
+        return false;
     }
   }
+
+export const reviveCharacter = async (characterId) => {
+    try {
+        const _signer = await getContractSigner();
+        const txn = await _signer.reviveCharacter(characterId);
+        txn.wait();
+        return true;
+    } catch (e) {
+        console.log("Unable to call revive function on character", e);
+        return false;
+    }
+}
