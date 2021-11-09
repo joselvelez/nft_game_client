@@ -13,19 +13,34 @@ export const Battle = ({ selectedCharacter }) => {
     const [showBattleNotification, setShowBattleNotification] = useState(false);
 
     useEffect(() => {
+        let mounted = true;
         console.log("Getting boss...");
-        loadBoss();
-        loadBattleCharacter(selectedCharacter);
+
+        if (mounted) {
+            loadBoss();
+            loadBattleCharacter(selectedCharacter);
+        }
+
+        return function cleanup() {
+            mounted = false;
+        }
     }, [selectedCharacter]);
 
     useEffect(() => {
         const provider = getContractProvider();
+        let mounted = true;
+
         provider.on('AttackComplete', (player, newBossHP, newPlayerHP) => {
-            console.log('testing');
             loadBoss();
             loadBattleCharacter(selectedCharacter);
-            setAttackState('peace');
-        })
+            if (mounted) {
+                setAttackState('peace');
+            }
+        });
+
+        return function cleanup() {
+            mounted = false;
+        }
     }, [selectedCharacter]);
 
     async function loadBoss() {
