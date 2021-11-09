@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { contractAddress } from "../constants/contractConstants";
 import { fetchCharacter, getContractProvider, reviveCharacter } from "../contracts/contractAPI";
+import reviveGif from '../images/revive.gif';
   
 export default function ViewCharacter({ setCurrentComponent, selectedCharacter }) {
+    const [isReviving, setIsReviving] = useState(false);
     const [currentCharacter, setCurrentCharacter] = useState({
         id: null,
         battleCharacter: {
@@ -16,6 +18,7 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
     });
 
     useEffect(() => {
+        const provider = getContractProvider();
         let mounted = true;
         
         if (mounted) {
@@ -23,24 +26,16 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
             loadCharacter(selectedCharacter);
         }
 
-        return function cleanup() {
-            mounted = false;
-        }
-    }, [selectedCharacter]);
-
-    useEffect(() => {
-        const provider = getContractProvider();
-        let mounted = true;
-
         provider.on("CharacterRevived", tokenID => {
             if (mounted) {
                 console.log('Character revived');
                 loadCharacter(selectedCharacter);
+                setIsReviving(false);
             }
         });
 
         return function cleanup() {
-            mounted = true;
+            mounted = false;
         }
     }, [selectedCharacter]);
 
@@ -53,10 +48,34 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
         }
     }
 
+    async function reviveCurrentCharacter(id) {
+        try {
+            setIsReviving(true);
+            try {
+                const _revived = await reviveCharacter(id);
+                if (_revived) {
+                    console.log("Character was revived");
+                } else {
+                    console.log("Error attempting to revive");
+                    setIsReviving(false);
+                }
+            } catch (e) {
+                console.log("Unable to revive character", e);
+            }
+        } catch (e) {
+            console.log("Unable to revive character", e);
+        }
+    }
+
     return (
       <div className="bg-white rounded">
         <div className="mx-auto py-4 px-4 sm:px-4 lg:px-6 lg:py-6">
-            <div className=" shadow rounded-lg bg-gray-100 flex flex-row p-2">
+            {isReviving ?
+                <div className="flex flex-col items-center">
+                    <img src={reviveGif} className="inline" width="500" alt="revive" />
+                    <p>We are doing our best to revive your character... stand by...</p>
+                </div> :
+                <div className=" shadow rounded-lg bg-gray-100 flex flex-row p-2">
                 <div>
                     <img src={currentCharacter.battleCharacter.imageURI} 
                         alt={currentCharacter.battleCharacter.name}
@@ -66,9 +85,11 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
                 <div className="py-2 pl-3">
                     <p className="text-2xl font-semibold text-gray-900">{currentCharacter.battleCharacter.name}</p>
                     <p>Health</p>
-                    <div className="bg-green-500 text-xs leading-none py-1 my-1 text-center text-white w-50" 
-                    style={{width: `${(currentCharacter.battleCharacter.hp/currentCharacter.battleCharacter.maxHp)*100}%`}}>
-                        {`${currentCharacter.battleCharacter.hp}/${currentCharacter.battleCharacter.maxHp}`}
+                    <div className="w-full shadow bg-gray-300">
+                        <div className="bg-green-500 text-xs leading-none py-1 my-1 text-center text-black w-50" 
+                        style={{width: `${(currentCharacter.battleCharacter.hp/currentCharacter.battleCharacter.maxHp)*100}%`}}>
+                            {`${currentCharacter.battleCharacter.hp}/${currentCharacter.battleCharacter.maxHp}`}
+                        </div>
                     </div>
                     <p>Attack Damage: {parseInt(currentCharacter.battleCharacter.attackDamage)}</p>
                 </div>
@@ -76,9 +97,8 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
                     <div className="flex flex-col ml-8 h-full justify-evenly">
                         <div className="flex flex-col place-items-center p-3">
                             <div className="">
-                                <a href={`https://testnets.opensea.io/assets/${contractAddress}/${currentCharacter.id} 
-                                    text-indigo-400 hover:text-indigo-500 transition ease-in-out duration-150`} 
-                                    rel="noreferrer" target="_blank"
+                                <a href={`https://testnets.opensea.io/assets/${contractAddress.toLowerCase()}/${currentCharacter.id}`} 
+                                    rel="noreferrer" target="_blank" className="text-indigo-400 hover:text-indigo-500 transition ease-in-out duration-150"
                                 >
                                     <button
                                         type="button"
@@ -102,7 +122,7 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
                             <div className="w-full">
                                     <button
                                         type="button"
-                                        onClick={() => reviveCharacter(currentCharacter.id)}
+                                        onClick={() => reviveCurrentCharacter(currentCharacter.id)}
                                         className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md w-full
                                             shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                     >
@@ -113,6 +133,7 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
                     </div>
                 </div>
             </div>
+            }
         </div>
       </div>
     )

@@ -32,9 +32,10 @@ export const Battle = ({ selectedCharacter }) => {
 
         provider.on('AttackComplete', (player, newBossHP, newPlayerHP) => {
             loadBoss();
-            loadBattleCharacter(selectedCharacter);
             if (mounted) {
+                setShowBattleNotification(true);
                 setAttackState('peace');
+                loadBattleCharacter(selectedCharacter);
             }
         });
 
@@ -66,10 +67,9 @@ export const Battle = ({ selectedCharacter }) => {
             setAttackState('war');
             console.log("Battle in progress...");
             try {
-                const battleResult = await attackBoss(_id);
+                const battleResult = await attackBoss(_id)
                 if (battleResult === true) {
-                    console.log("Battle over");
-                    setShowBattleNotification(true);
+                    console.log("Battle in progress");
                 } else {
                     setAttackState('peace');
                 }
@@ -87,7 +87,7 @@ export const Battle = ({ selectedCharacter }) => {
         <div className="bg-white rounded">
         <div className="mx-auto py-6 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-8">
             {attackState === 'peace' ?
-                <div className="flex flex-row">
+                <div className="flex flex-row justify-evenly">
                     {boss ? <BattleCardBoss characterData={boss} attackState={attackState} /> : <p>No boss found.</p>}
                     {battleCharacter ? <BattleCardPlayer characterData={battleCharacter.battleCharacter}/> : <p>No character found for battle.</p>}
                 </div> : ''

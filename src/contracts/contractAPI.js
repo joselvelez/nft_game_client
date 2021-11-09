@@ -90,11 +90,12 @@ export const fetchCurrentTeam = async () => {
 export const attackBoss = async (_id) => {
     try {
         const _contractSigner = getContractSigner();
+        console.log("Attacking the boss");
         const attackTxn = await _contractSigner.attackBoss(_id);
         attackTxn.wait();
         return true;
     } catch (e) {
-        console.log("Unable to attack");
+        console.log("Unable to attack", e);
         return false;
     }
 }
