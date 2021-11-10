@@ -7,14 +7,15 @@ import LoadTeam from './LoadTeamBtn';
 import MintNewCharacter from './MintNewCharacterBtn';
 import MintNewCharacterSelection from './MintNewCharacterSelection';
 import ViewCharacter from './ViewCharacter';
+import { Rules } from './Rules';
 
 export const Content = () => {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
-  const [currentComponent, setCurrentComponent] = useState('MintNewCharacter'); // Options are MintNewCharacter, LoadTeam, Battle, ViewCharacter
+  const [currentComponent, setCurrentComponent] = useState('MintNewCharacter'); // Options are MintNewCharacter, LoadTeam, Battle, ViewCharacter, Rules
 
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <Header />
+      <Header setCurrentComponent={setCurrentComponent} />
       <div className="flex flex-row">
         <MintNewCharacter setCurrentComponent={setCurrentComponent}/>
         <LoadTeam setCurrentComponent={setCurrentComponent} />
@@ -25,6 +26,8 @@ export const Content = () => {
             switch (currentComponent) {
               case 'LoadTeam':
                 return <LoadCurrentTeam setCurrentComponent={setCurrentComponent} setSelectedCharacter={setSelectedCharacter} />;
+              case 'Rules':
+                return <Rules />;
               case 'Battle':
                 return <Battle selectedCharacter={selectedCharacter} />;
               case 'ViewCharacter':

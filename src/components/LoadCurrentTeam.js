@@ -27,30 +27,30 @@ export default function LoadCurrentTeam({ setCurrentComponent, setSelectedCharac
 
     return (
       <div className="bg-white rounded">
-      <div className="mx-auto py-6 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-8">
-        <div className="space-y-6">
-            {currentTeam.length > 0 ? <TeamAvailable /> : <NoTeamAvailable />}
-          <ul
-            className="space-y-8 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 sm:space-y-0 lg:grid-cols-3"
-          >
-                {currentTeam.map((person) => (
-                <li key={person.id}>
-                    <div className="space-y-1 w-auto flex flex-col place-items-center">
-                        <div className="flex flex-row">
-                            <img className="w-32 h-32 flex-shrink-0 rounded-full cursor-pointer hover:shadow-lg" 
-                                src={person.battleCharacter.imageURI} alt="" onClick={() => loadCharacter(person.id)}/>
-                        </div>
-                        <div className="space-y-2">
-                            <div className="text-lg leading-7 font-normal space-y-1">
-                            <h3>{person.battleCharacter.name}</h3>
+        <div className="mx-auto py-6 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-8">
+            <div className="space-y-6">
+                {currentTeam.length > 0 ? <TeamAvailable /> : <NoTeamAvailable />}
+            <ul
+                className="space-y-8 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 sm:space-y-0 lg:grid-cols-3"
+            >
+                    {currentTeam.map((person) => (
+                    <li key={person.id}>
+                        <div className="space-y-1 w-auto flex flex-col place-items-center">
+                            <div className="flex flex-row">
+                                <img className="w-32 h-32 flex-shrink-0 rounded-full cursor-pointer hover:shadow-lg" 
+                                    src={person.battleCharacter.imageURI} alt="" onClick={() => loadCharacter(person.id)}/>
+                            </div>
+                            <div className="space-y-2">
+                                <div className="text-lg leading-7 font-normal space-y-1">
+                                <h3>{person.battleCharacter.name}</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-                ))}
-          </ul>
+                    </li>
+                    ))}
+            </ul>
+            </div>
         </div>
-      </div>
       </div>
     );
   }
