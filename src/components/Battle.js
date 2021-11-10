@@ -7,7 +7,16 @@ import BattleNotification from "./BattleNotification";
 import { BattleProgress } from "./BattleProgress";
 
 export const Battle = ({ selectedCharacter }) => {
-    const [battleCharacter, setBattleCharacter] = useState();
+    const [battleCharacter, setBattleCharacter] = useState({
+        battleCharacter: {
+            name: null,
+            hp: null,
+            maxHp: null,
+            imageURI: null,
+            attackDamage: null,
+            characterIndex: null
+        }
+    });
     const [boss, setBoss] = useState();
     const [attackState, setAttackState] = useState('peace');
     const [showBattleNotification, setShowBattleNotification] = useState(false);

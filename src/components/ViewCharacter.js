@@ -86,8 +86,8 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
                     <p className="text-2xl font-semibold text-gray-900">{currentCharacter.battleCharacter.name}</p>
                     <p>Health</p>
                     <div className="w-full shadow bg-gray-300">
-                        <div className="bg-green-500 text-xs leading-none py-1 my-1 text-center text-black w-50" 
-                        style={{width: `${(currentCharacter.battleCharacter.hp/currentCharacter.battleCharacter.maxHp)*100}%`}}>
+                        <div className="bg-green-500 text-xs leading-none py-1 my-1 text-center text-black" 
+                        style={{width: `${(currentCharacter.battleCharacter.hp / currentCharacter.battleCharacter.maxHp)*100}%`}}>
                             {`${currentCharacter.battleCharacter.hp}/${currentCharacter.battleCharacter.maxHp}`}
                         </div>
                     </div>
@@ -113,7 +113,8 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
                                     <button
                                         type="button"
                                         onClick={() => setCurrentComponent('Battle')}
-                                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md w-full
+                                        disabled={parseInt(currentCharacter.battleCharacter.hp) === 0 ? true : false}
+                                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md w-full disabled:opacity-20
                                             shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                     >
                                         Battle the Boss!
@@ -122,8 +123,9 @@ export default function ViewCharacter({ setCurrentComponent, selectedCharacter }
                             <div className="w-full">
                                     <button
                                         type="button"
+                                        disabled={parseInt(currentCharacter.battleCharacter.hp) > 0 ? true : false}
                                         onClick={() => reviveCurrentCharacter(currentCharacter.id)}
-                                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md w-full
+                                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md w-full disabled:opacity-20
                                             shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                     >
                                         Revive your character

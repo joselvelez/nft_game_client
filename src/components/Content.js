@@ -30,7 +30,7 @@ export const Content = () => {
               case 'ViewCharacter':
                 return <ViewCharacter selectedCharacter={selectedCharacter} setCurrentComponent={setCurrentComponent} />
               default:
-                return <MintNewCharacterSelection />;
+                return <MintNewCharacterSelection setCurrentComponent={setCurrentComponent} />;
             }
           })()}
       </div>

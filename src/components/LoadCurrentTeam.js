@@ -52,5 +52,5 @@ export default function LoadCurrentTeam({ setCurrentComponent, setSelectedCharac
         </div>
       </div>
       </div>
-    )
+    );
   }

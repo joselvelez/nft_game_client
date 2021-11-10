@@ -123,3 +123,15 @@ export const reviveCharacter = async (characterId) => {
         return false;
     }
 }
+
+export const fetchUsedCharacterIndexArray = async () => {
+    try {
+        const _currentTeam = await fetchCurrentTeam();
+        const _usedCharacterIndexArray = _currentTeam.map(item => {
+            return parseInt(item.battleCharacter.characterIndex);
+        });
+        return _usedCharacterIndexArray;
+    } catch (e) {
+        console.log("Unable to fetch character index values", e);
+    }
+}
