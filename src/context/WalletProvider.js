@@ -13,22 +13,26 @@ const WalletProvider = ({ children }) => {
     }
     const [state, dispatch] = useReducer(walletReducer, initialState);
 
-    // Handle wallet events (Docs @ https://docs.metamask.io/guide/ethereum-provider.html#events)
-    window.ethereum.on('accountsChanged', () => {
-        console.log("Changing account");
-        getAccount();
-    });
-  
-    window.ethereum.on('chainChanged', (chainId) => {
-        console.log(`Switching chains to ${chainId}`);
-        getChain();
-        window.location.reload();
-    });
+    if (window.ethereum) {
+        // Handle wallet events (Docs @ https://docs.metamask.io/guide/ethereum-provider.html#events)
+        window.ethereum.on('accountsChanged', () => {
+            console.log("Changing account");
+            getAccount();
+        });
+    
+        window.ethereum.on('chainChanged', (chainId) => {
+            console.log(`Switching chains to ${chainId}`);
+            getChain();
+            window.location.reload();
+        });
+    }
 
     useEffect(() => {
         walletInstalled();
-        getChain();
-        getAccount();
+        if (window.ethereum) {
+            getChain();
+            getAccount();
+        }
     }, []);
 
     // dispatch method to check if a wallet is installed
